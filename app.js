@@ -10,6 +10,8 @@ const app = express()
 
 app.use(express.json())
 
+app.use(cors())
+
 app.get('/', (req, res) => {
     res.send ('It works!')
 })
@@ -19,9 +21,9 @@ import Todo from './models/Todo.model.js'
 app.get('/todos', async (req, res) => {
     try {
         const todos = await Todo.find()
-        res.status(200).json(books)
+        res.status(200).json(todo)
     } catch (error) {
-        res.status(500).json({ status: 500, msg: error.message })
+        res.status(500).json({ status: 500, msg: error })
     }
 })
 
@@ -31,7 +33,7 @@ app.post('/todos', async (req, res) => {
         const newTodo = await Todo.create(body)
         res.status(201).json(newTodo)
     } catch (error) {
-        res.status(400).json({ status: 400, msg: error.message })
+        res.status(400).json({ status: 400, msg: console.error(); })
     }
 })
 
@@ -48,7 +50,7 @@ app.put('/todos/:id', async (req, res) => {
         if (error.name === 'CastError') {
             res.status(404).json ({ status: 404, msg: error })
         } else {
-            res.status(500).json ({ status: 500, msg: error.message })
+            res.status(500).json ({ status: 500, msg: error })
         }
     }
 })
